@@ -89,15 +89,16 @@ var QuerrySelector = /** @class */ (function () {
             functionReady(event);
         });
     };
+    QuerrySelector.qs = function (filter, func) {
+        if (func === void 0) { func = null; }
+        var list = document.querySelectorAll(filter);
+        if (typeof func === 'function') {
+            list.forEach(function (element) {
+                func(element);
+            });
+        }
+        return new QuerrySelector(list);
+    };
     return QuerrySelector;
 }());
-function qs(filter, func) {
-    if (func === void 0) { func = null; }
-    var list = document.querySelectorAll(filter);
-    if (typeof func === 'function') {
-        list.forEach(function (element) {
-            func(element);
-        });
-    }
-    return new QuerrySelector(list);
-}
+var qs = QuerrySelector.qs;

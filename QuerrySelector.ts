@@ -105,17 +105,21 @@ class QuerrySelector {
         });
     }
 
-}
-
-
-function qs(filter:string, func:any = null){
-    const list = document.querySelectorAll(filter); 
-    if (typeof func === 'function') {
-        list.forEach(element => {
-            func(element)
-        });
+    static qs(filter:string, func:any = null){
+        const list = document.querySelectorAll(filter); 
+        if (typeof func === 'function') {
+            list.forEach(element => {
+                func(element)
+            });
+        }
+    
+        return new QuerrySelector(list);
     }
-
-    return new QuerrySelector(list);
+    
 }
+
+let qs = QuerrySelector.qs;
+
+
+
 

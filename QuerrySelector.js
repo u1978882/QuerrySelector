@@ -123,11 +123,11 @@ var QuerrySelector = /** @class */ (function () {
         return new QuerrySelector(list);
     };
     QuerrySelector.toNodeList = function (elm) {
-        var list;
+        var li;
         elm.setAttribute('wrapNodeList', '');
-        list = document.querySelectorAll('[wrapNodeList]');
+        li = document.querySelectorAll('[wrapNodeList]');
         elm.removeAttribute('wrapNodeList');
-        return list;
+        return li;
     };
     return QuerrySelector;
 }());

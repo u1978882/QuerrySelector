@@ -2,11 +2,11 @@ class QuerrySelector {
 
     private list: NodeListOf<Element>;
 
-    constructor(list:NodeListOf<Element>) {
+    public constructor(list:NodeListOf<Element>) {
         this.list = list;
     }
 
-    innerText(text:string | undefined = undefined) {
+    public innerText(text:string | undefined = undefined) : string {
         if (text != undefined){
             this.list.forEach(element => {
                 (<HTMLElement>element).innerText = text
@@ -15,7 +15,7 @@ class QuerrySelector {
         return (<HTMLElement>(this.list[0])) ? (<HTMLElement>(this.list[0])).innerText : undefined
     }
 
-    innerHTML(html:any = undefined) {
+    public innerHTML(html:any = undefined) : string {
         if (typeof html === 'function'){
             let stringHtml:string = html("");
             this.list.forEach(element => {
@@ -32,54 +32,54 @@ class QuerrySelector {
         }
     }
 
-    remove() {
+    public remove() : void {
         this.list.forEach(element => {
             element.remove();
         });
     }
     
-    attr(atribute: string, val:string | undefined = undefined) {
+    public attr(atribute: string, val:string | undefined = undefined) : any {
         if (val != undefined && this.list[0][atribute])
             this.list[0][atribute] = val;
         return this.list[0][atribute] ? this.list[0][atribute] : undefined
     }
 
-    val(val:string | undefined = undefined) {
+    public val(val:string | undefined = undefined) : any {
         return this.attr("value", val)
     }
 
-    data(data: string, valor:string | undefined = undefined){
+    public data(data: string, valor:string | undefined = undefined) : string{
         if (valor != undefined && this.list[0])
             this.list[0].setAttribute("data-"+data, valor)
         return this.list[0].getAttribute("data-"+data)
     }
 
-    setStyle(atribute: string, value: string) {
+    public setStyle(atribute: string, value: string) : void {
         this.list.forEach(element => {
             (<HTMLElement>element).style[atribute] = value;
         });
     }
 
-    addClass(classString: string) {
+    public addClass(classString: string) : void {
         this.list.forEach(element => {
             element.classList.add(classString);
         });
     }
 
-    removeClass(classString: string) {
+    public removeClass(classString: string) : void {
         this.list.forEach(element => {
             element.classList.remove(classString);
         });
     }
 
-    count(){
+    public count() : number{
         return this.list.length;
     }
 
 
     // Event listeners
 
-    el(type:string, listener:Function, preventDefaults: boolean = false) {
+    public el(type:string, listener:Function, preventDefaults: boolean = false) : void {
         this.list.forEach(element => {
             element.addEventListener(type, function(event){
                 if (preventDefaults)
@@ -89,45 +89,45 @@ class QuerrySelector {
         });
     }
 
-    fe(type:string) {
+    public fe(type:string) : void {
         this.list.forEach(element => {
             (<HTMLElement>element).dispatchEvent(new Event(type));
         });
     }
 
-    onClick(listener:Function, preventDefaults: boolean = false) {
+    public onClick(listener:Function, preventDefaults: boolean = false) : void {
         this.el("click", listener, preventDefaults);
     }
 
-    click() {
+    public click() : void {
         this.fe("click");
     }
 
-    onSubmit(listener:Function, preventDefaults: boolean = false) {
+    public onSubmit(listener:Function, preventDefaults: boolean = false) : void {
         this.el("submit", listener, preventDefaults);
     }
 
-    submit() {
+    public submit() : void {
         this.fe("submit");
     }
 
-    onMouseOver(listener:Function, preventDefaults: boolean = false) {
+    public onMouseOver(listener:Function, preventDefaults: boolean = false) : void {
         this.el("mouseOver", listener, preventDefaults);
     }
 
-    mouseOver() {
+    public mouseOver() : void {
         this.fe("mouseOver");
     }
 
 
     // Static function that gets a function as parameter and will be called when the DOM is loaded
-    static ready(functionReady:Function){
+    public static ready(functionReady:Function) : void{
         document.addEventListener("DOMContentLoaded", function(event) {
             functionReady(event);
         });
     }
 
-    static qs(filter:string, func:any = null){
+    public static qs(filter:string, func:any = null) : QuerrySelector{
         const list = document.querySelectorAll(filter); 
         if (typeof func === 'function') {
             list.forEach(element => {
@@ -138,12 +138,12 @@ class QuerrySelector {
         return new QuerrySelector(list);
     }
     
-    static toNodeList(elm: Element){
-        var list;
+    private static toNodeList(elm: Element) : NodeListOf<Element>{
+        let li : NodeListOf<Element>;
         elm.setAttribute('wrapNodeList','');
-        list = document.querySelectorAll('[wrapNodeList]');
+        li = document.querySelectorAll('[wrapNodeList]');
         elm.removeAttribute('wrapNodeList');
-        return list;
+        return li;
     }
 
 }

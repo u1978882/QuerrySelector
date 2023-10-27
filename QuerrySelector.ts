@@ -48,6 +48,18 @@ class QuerrySelector {
         return this.attr("value", val)
     }
 
+    data(data: string, valor:string | undefined = undefined){
+        if (valor != undefined && this.list[0])
+            this.list[0].setAttribute("data-"+data, valor)
+        return this.list[0].getAttribute("data-"+data)
+    }
+
+    setStyle(atribute: string, value: string) {
+        this.list.forEach(element => {
+            (<HTMLElement>element).style[atribute] = value;
+        });
+    }
+
     addClass(classString: string) {
         this.list.forEach(element => {
             element.classList.add(classString);
@@ -70,7 +82,7 @@ class QuerrySelector {
     el(type:string, listener:Function) {
         this.list.forEach(element => {
             element.addEventListener(type, function(event){
-                listener(event);
+                listener(event, new QuerrySelector(QuerrySelector.toNodeList(element)));
             })
         });
     }
@@ -97,8 +109,16 @@ class QuerrySelector {
         this.fe("submit");
     }
 
+    onMouseOver(listener:Function) {
+        this.el("mouseOver", listener);
+    }
 
-    // Static function that gets a function that will be called when the DOM is loaded
+    mouseOver() {
+        this.fe("mouseOver");
+    }
+
+
+    // Static function that gets a function as parameter and will be called when the DOM is loaded
     static ready(functionReady:Function){
         document.addEventListener("DOMContentLoaded", function(event) {
             functionReady(event);
@@ -109,13 +129,21 @@ class QuerrySelector {
         const list = document.querySelectorAll(filter); 
         if (typeof func === 'function') {
             list.forEach(element => {
-                func(element)
+                func(new QuerrySelector(QuerrySelector.toNodeList(element)))
             });
         }
     
         return new QuerrySelector(list);
     }
     
+    static toNodeList(elm: Element){
+        var list;
+        elm.setAttribute('wrapNodeList','');
+        list = document.querySelectorAll('[wrapNodeList]');
+        elm.removeAttribute('wrapNodeList');
+        return list;
+    }
+
 }
 
 let qs = QuerrySelector.qs;

@@ -45,6 +45,17 @@ var QuerrySelector = /** @class */ (function () {
         if (val === void 0) { val = undefined; }
         return this.attr("value", val);
     };
+    QuerrySelector.prototype.data = function (data, valor) {
+        if (valor === void 0) { valor = undefined; }
+        if (valor != undefined && this.list[0])
+            this.list[0].setAttribute("data-" + data, valor);
+        return this.list[0].getAttribute("data-" + data);
+    };
+    QuerrySelector.prototype.setStyle = function (atribute, value) {
+        this.list.forEach(function (element) {
+            element.style[atribute] = value;
+        });
+    };
     QuerrySelector.prototype.addClass = function (classString) {
         this.list.forEach(function (element) {
             element.classList.add(classString);
@@ -62,7 +73,7 @@ var QuerrySelector = /** @class */ (function () {
     QuerrySelector.prototype.el = function (type, listener) {
         this.list.forEach(function (element) {
             element.addEventListener(type, function (event) {
-                listener(event);
+                listener(event, new QuerrySelector(QuerrySelector.toNodeList(element)));
             });
         });
     };
@@ -83,7 +94,13 @@ var QuerrySelector = /** @class */ (function () {
     QuerrySelector.prototype.submit = function () {
         this.fe("submit");
     };
-    // Static function that gets a function that will be called when the DOM is loaded
+    QuerrySelector.prototype.onMouseOver = function (listener) {
+        this.el("mouseOver", listener);
+    };
+    QuerrySelector.prototype.mouseOver = function () {
+        this.fe("mouseOver");
+    };
+    // Static function that gets a function as parameter and will be called when the DOM is loaded
     QuerrySelector.ready = function (functionReady) {
         document.addEventListener("DOMContentLoaded", function (event) {
             functionReady(event);
@@ -94,10 +111,17 @@ var QuerrySelector = /** @class */ (function () {
         var list = document.querySelectorAll(filter);
         if (typeof func === 'function') {
             list.forEach(function (element) {
-                func(element);
+                func(new QuerrySelector(QuerrySelector.toNodeList(element)));
             });
         }
         return new QuerrySelector(list);
+    };
+    QuerrySelector.toNodeList = function (elm) {
+        var list;
+        elm.setAttribute('wrapNodeList', '');
+        list = document.querySelectorAll('[wrapNodeList]');
+        elm.removeAttribute('wrapNodeList');
+        return list;
     };
     return QuerrySelector;
 }());

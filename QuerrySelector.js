@@ -70,9 +70,12 @@ var QuerrySelector = /** @class */ (function () {
         return this.list.length;
     };
     // Event listeners
-    QuerrySelector.prototype.el = function (type, listener) {
+    QuerrySelector.prototype.el = function (type, listener, preventDefaults) {
+        if (preventDefaults === void 0) { preventDefaults = false; }
         this.list.forEach(function (element) {
             element.addEventListener(type, function (event) {
+                if (preventDefaults)
+                    event.preventDefault();
                 listener(event, new QuerrySelector(QuerrySelector.toNodeList(element)));
             });
         });
@@ -82,20 +85,23 @@ var QuerrySelector = /** @class */ (function () {
             element.dispatchEvent(new Event(type));
         });
     };
-    QuerrySelector.prototype.onClick = function (listener) {
-        this.el("click", listener);
+    QuerrySelector.prototype.onClick = function (listener, preventDefaults) {
+        if (preventDefaults === void 0) { preventDefaults = false; }
+        this.el("click", listener, preventDefaults);
     };
     QuerrySelector.prototype.click = function () {
         this.fe("click");
     };
-    QuerrySelector.prototype.onSubmit = function (listener) {
-        this.el("submit", listener);
+    QuerrySelector.prototype.onSubmit = function (listener, preventDefaults) {
+        if (preventDefaults === void 0) { preventDefaults = false; }
+        this.el("submit", listener, preventDefaults);
     };
     QuerrySelector.prototype.submit = function () {
         this.fe("submit");
     };
-    QuerrySelector.prototype.onMouseOver = function (listener) {
-        this.el("mouseOver", listener);
+    QuerrySelector.prototype.onMouseOver = function (listener, preventDefaults) {
+        if (preventDefaults === void 0) { preventDefaults = false; }
+        this.el("mouseOver", listener, preventDefaults);
     };
     QuerrySelector.prototype.mouseOver = function () {
         this.fe("mouseOver");

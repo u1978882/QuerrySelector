@@ -79,9 +79,11 @@ class QuerrySelector {
 
     // Event listeners
 
-    el(type:string, listener:Function) {
+    el(type:string, listener:Function, preventDefaults: boolean = false) {
         this.list.forEach(element => {
             element.addEventListener(type, function(event){
+                if (preventDefaults)
+                    event.preventDefault();
                 listener(event, new QuerrySelector(QuerrySelector.toNodeList(element)));
             })
         });
@@ -93,24 +95,24 @@ class QuerrySelector {
         });
     }
 
-    onClick(listener:Function) {
-        this.el("click", listener);
+    onClick(listener:Function, preventDefaults: boolean = false) {
+        this.el("click", listener, preventDefaults);
     }
 
     click() {
         this.fe("click");
     }
 
-    onSubmit(listener:Function) {
-        this.el("submit", listener);
+    onSubmit(listener:Function, preventDefaults: boolean = false) {
+        this.el("submit", listener, preventDefaults);
     }
 
     submit() {
         this.fe("submit");
     }
 
-    onMouseOver(listener:Function) {
-        this.el("mouseOver", listener);
+    onMouseOver(listener:Function, preventDefaults: boolean = false) {
+        this.el("mouseOver", listener, preventDefaults);
     }
 
     mouseOver() {

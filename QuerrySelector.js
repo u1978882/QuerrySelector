@@ -66,6 +66,11 @@ var QuerrySelector = /** @class */ (function () {
             element.classList.remove(classString);
         });
     };
+    QuerrySelector.prototype.replaceClass = function (classStringReplace, classStringEnter) {
+        this.list.forEach(function (element) {
+            element.classList.replace(classStringReplace, classStringEnter);
+        });
+    };
     QuerrySelector.prototype.count = function () {
         return this.list.length;
     };

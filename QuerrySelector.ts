@@ -71,6 +71,12 @@ class QuerrySelector {
             element.classList.remove(classString);
         });
     }
+    
+    public replaceClass(classStringReplace: string, classStringEnter: string) : void {
+        this.list.forEach(element => {
+            element.classList.replace(classStringReplace, classStringEnter);
+        });
+    }
 
     public count() : number{
         return this.list.length;

@@ -75,6 +75,10 @@ class QuerrySelector {
     public count() : number{
         return this.list.length;
     }
+    
+    public isVisible() : boolean {
+        return (window.getComputedStyle((<HTMLElement>this.list[0])).display) != 'none';
+    }
 
 
     // Event listeners
@@ -111,12 +115,26 @@ class QuerrySelector {
         this.fe("submit");
     }
 
-    public onMouseOver(listener:Function, preventDefaults: boolean = false) : void {
+    public onMouseOver(listener : Function, preventDefaults : boolean = false) : void {
         this.el("mouseOver", listener, preventDefaults);
     }
 
     public mouseOver() : void {
         this.fe("mouseOver");
+    }
+    
+    public onChangeVisibility(callback : Function) : void {
+        if (this.list[0]){
+            let selector : QuerrySelector = this;
+            new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if(entry.intersectionRatio > 0) {
+                        callback(selector);
+                        observer.disconnect();
+                    }
+                });
+            }).observe(this.list[0]);
+        }
     }
 
 

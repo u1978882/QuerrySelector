@@ -69,6 +69,9 @@ var QuerrySelector = /** @class */ (function () {
     QuerrySelector.prototype.count = function () {
         return this.list.length;
     };
+    QuerrySelector.prototype.isVisible = function () {
+        return (window.getComputedStyle(this.list[0]).display) != 'none';
+    };
     // Event listeners
     QuerrySelector.prototype.el = function (type, listener, preventDefaults) {
         if (preventDefaults === void 0) { preventDefaults = false; }
@@ -105,6 +108,20 @@ var QuerrySelector = /** @class */ (function () {
     };
     QuerrySelector.prototype.mouseOver = function () {
         this.fe("mouseOver");
+    };
+    QuerrySelector.prototype.onChangeVisibility = function (callback) {
+        if (this.list[0]) {
+            var selector_1 = this;
+            new IntersectionObserver(function (entries, observer) {
+                entries.forEach(function (entry) {
+                    if (entry.intersectionRatio > 0) {
+                        callback(selector_1);
+                        observer.disconnect();
+                    }
+                });
+            }).observe(this.list[0]);
+            //if(!callback) return new Promise(r => callback=r);
+        }
     };
     // Static function that gets a function as parameter and will be called when the DOM is loaded
     QuerrySelector.ready = function (functionReady) {

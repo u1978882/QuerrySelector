@@ -40,7 +40,7 @@ var QuerrySelector = /** @class */ (function () {
     };
     QuerrySelector.prototype.attr = function (atribute, val) {
         if (val === void 0) { val = undefined; }
-        if (val != undefined && this.list[0][atribute])
+        if (val != undefined && this.list[0])
             this.list[0][atribute] = val;
         return this.list[0][atribute] ? this.list[0][atribute] : false;
     };

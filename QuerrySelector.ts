@@ -6,6 +6,10 @@ class QuerrySelector {
         this.list = list;
     }
 
+    public firstElement() {
+        return this.list[0];
+    }
+
     public innerText(text:string | undefined = undefined) : string {
         if (text != undefined){
             this.list.forEach(element => {

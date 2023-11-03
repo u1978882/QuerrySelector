@@ -2,6 +2,9 @@ var QuerrySelector = /** @class */ (function () {
     function QuerrySelector(list) {
         this.list = list;
     }
+    QuerrySelector.prototype.firstElement = function () {
+        return this.list[0];
+    };
     QuerrySelector.prototype.innerText = function (text) {
         if (text === void 0) { text = undefined; }
         if (text != undefined) {

@@ -106,6 +106,14 @@ class QuerrySelector {
     public click() : void {
         this.fe("click");
     }
+    
+    public onChange(listener:Function, preventDefaults: boolean = false) : void {
+        this.el("change", listener, preventDefaults);
+    }
+
+    public change() : void {
+        this.fe("change");
+    }
 
     public onSubmit(listener:Function, preventDefaults: boolean = false) : void {
         this.el("submit", listener, preventDefaults);

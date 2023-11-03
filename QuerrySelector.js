@@ -95,6 +95,13 @@ var QuerrySelector = /** @class */ (function () {
     QuerrySelector.prototype.click = function () {
         this.fe("click");
     };
+    QuerrySelector.prototype.onChange = function (listener, preventDefaults) {
+        if (preventDefaults === void 0) { preventDefaults = false; }
+        this.el("change", listener, preventDefaults);
+    };
+    QuerrySelector.prototype.change = function () {
+        this.fe("change");
+    };
     QuerrySelector.prototype.onSubmit = function (listener, preventDefaults) {
         if (preventDefaults === void 0) { preventDefaults = false; }
         this.el("submit", listener, preventDefaults);
@@ -120,7 +127,6 @@ var QuerrySelector = /** @class */ (function () {
                     }
                 });
             }).observe(this.list[0]);
-            //if(!callback) return new Promise(r => callback=r);
         }
     };
     // Static function that gets a function as parameter and will be called when the DOM is loaded

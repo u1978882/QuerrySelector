@@ -41,7 +41,7 @@ var QuerrySelector = /** @class */ (function () {
             this.list[0][atribute] = val;
         return this.list[0][atribute] ? this.list[0][atribute] : undefined;
     };
-    QuerrySelector.prototype.val = function (val) {
+    QuerrySelector.prototype.value = function (val) {
         if (val === void 0) { val = undefined; }
         return this.attr("value", val);
     };

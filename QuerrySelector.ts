@@ -44,7 +44,7 @@ class QuerrySelector {
         return this.list[0][atribute] ? this.list[0][atribute] : undefined
     }
 
-    public val(val:string | undefined = undefined) : any {
+    public value(val:string | undefined = undefined) : any {
         return this.attr("value", val)
     }
 
